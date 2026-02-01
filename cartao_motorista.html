@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Cartão digital de Douglas Rodrigues - Motorista Uber Particular">
+    <title>Douglas Rodrigues | Motorista Uber</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #276ef1;
+            --secondary-light: #4a8af8;
+            --accent: #10b981;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: #2a2a2a;
+            --wave-color: #276ef1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.01em;
+        }
+
+        /* Background com partículas */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; }
+        .particle:nth-child(2) { left: 20%; top: 60%; }
+        .particle:nth-child(3) { left: 30%; top: 40%; }
+        .particle:nth-child(4) { left: 40%; top: 80%; }
+        .particle:nth-child(5) { left: 50%; top: 30%; }
+        .particle:nth-child(6) { left: 60%; top: 70%; }
+        .particle:nth-child(7) { left: 70%; top: 50%; }
+        .particle:nth-child(8) { left: 80%; top: 25%; }
+        .particle:nth-child(9) { left: 90%; top: 65%; }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card Principal */
+        .card {
+            background: var(--bg-card);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 
+                0 30px 100px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.03),
+                0 0 80px rgba(39, 110, 241, 0.1);
+            border: 1px solid var(--border);
+            position: relative;
+            animation: cardEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+        }
+
+        @keyframes cardEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header com Onda */
+        .card-header {
+            position: relative;
+            padding: 50px 24px 80px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        /* Ondas animadas */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: var(--secondary);
+            opacity: 0.12;
+            border-radius: 40% 40% 0 0;
+        }
+
+        .wave:nth-child(2) {
+            background: var(--secondary-light);
+            opacity: 0.08;
+            border-radius: 45% 45% 0 0;
+            bottom: -10px;
+        }
+
+        .wave:nth-child(3) {
+            background: var(--secondary);
+            opacity: 0.05;
+            border-radius: 35% 50% 0 0;
+            bottom: -20px;
+        }
+
+        /* Gradiente ondulado principal */
+        .header-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 50% 120%, var(--secondary) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 0%, rgba(39, 110, 241, 0.4) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(26, 26, 46, 0.8) 0%, rgba(22, 33, 62, 0.9) 100%);
+        }
+
+        /* Linha de onda no final do header */
+        .wave-line {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 2;
+        }
+
+        .wave-line svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--bg-card);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        /* Avatar com animação */
+        .avatar-container {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px;
+            animation: avatarEnter 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        @keyframes avatarEnter {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            background: var(--bg-elevated);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-card);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(39, 110, 241, 0.4);
+            background: transparent;
+        }
+
+        .status-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Badge verificado */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .driver-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .driver-title {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Corpo do card */
+        .card-body {
+            padding: 0 20px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Estatísticas */
+        .stats-container {
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            padding: 24px 20px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 30px;
+            background: var(--border);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            animation: countUp 1s ease-out 1s forwards;
+            opacity: 0;
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* Seção de contato */
+        .contact-section {
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(39, 110, 241, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .contact-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(5px);
+        }
+
+        .contact-item:active {
+            transform: scale(0.98);
+        }
+
+        .contact-item + .contact-item {
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a5fd9 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 110, 241, 0.3);
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(39, 110, 241, 0.4);
+        }
+
+        .contact-icon.whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .contact-item:hover .contact-icon.whatsapp {
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 3px;
+        }
+
+        .contact-value {
+            font-size: 14px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .contact-arrow {
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-arrow {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        /* Botões de ação */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:nth-child(1) { animation-delay: 1s; }
+        .action-btn:nth-child(2) { animation-delay: 1.1s; }
+        .action-btn:nth-child(3) { animation-delay: 1.2s; }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(39, 110, 241, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .action-btn:hover::before {
+            opacity: 1;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-4px);
+            border-color: rgba(39, 110, 241, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn:active {
+            transform: scale(0.96) translateY(-2px);
+        }
+
+        .action-btn i {
+            font-size: 22px;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover i {
+            transform: scale(1.2);
+            color: var(--secondary-light);
+        }
+
+        .action-btn span {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* Botão principal */
+        .btn-primary {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a5fd9 100%);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 6px 25px rgba(39, 110, 241, 0.4);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(39, 110, 241, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 16px 24px;
+            background: transparent;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(37, 211, 102, 0.1);
+            border-color: #25d366;
+            color: #25d366;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .card-footer {
+            text-align: center;
+            padding: 0 20px 24px;
+            animation: fadeIn 1s ease 1.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+            opacity: 0.8;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8);
+            animation: modalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+            color: #ff4444;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(39, 110, 241, 0.2);
+        }
+
+        .route-icon {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0;
+        }
+
+        .route-icon i {
+            font-size: 20px;
+            color: var(--secondary);
+            background: var(--bg-elevated);
+            padding: 12px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, rgba(39, 110, 241, 0.15) 0%, rgba(39, 110, 241, 0.05) 100%);
+            border: 1px solid rgba(39, 110, 241, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .price-value {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .price-note {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .trip-type-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .trip-type-btn {
+            padding: 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .trip-type-btn:hover {
+            border-color: var(--secondary);
+            color: #fff;
+        }
+
+        .trip-type-btn.active {
+            background: rgba(39, 110, 241, 0.2);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+
+        .trip-type-btn i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .modal-footer {
+            padding: 0 24px 24px;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, #0d9488 100%);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-confirm:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            color: var(--accent);
+            font-size: 20px;
+            animation: toastIcon 0.5s ease;
+        }
+
+        @keyframes toastIcon {
+            0% { transform: scale(0) rotate(-180deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsivo */
+        @media (max-width: 400px) {
+            .card-body {
+                padding: 0 16px 16px;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .stat-item::after {
+                display: none;
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .action-btn {
+                padding: 16px 8px;
+            }
+
+            .action-btn span {
+                font-size: 10px;
+            }
+
+            .driver-name {
+                font-size: 22px;
+            }
+        }
+
+        /* Animações gerais */
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <!-- Header com onda -->
+            <div class="card-header">
+                <div class="header-gradient"></div>
+                <div class="wave-container">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+                <div class="wave-line">
+                    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                        <path d="M0,64 C480,150 960,0 1440,64 L1440,120 L0,120 Z" fill="#111111"/>
+                    </svg>
+                </div>
+                
+                <div class="header-content">
+                    <div class="avatar-container">
+                        <div class="avatar">
+                            <img src="assets/logo.jpg" alt="Douglas Rodrigues - Motorista Uber">
+                        </div>
+                        <div class="status-badge">
+                            <img src="assets/verificado.png" alt="Verificado">
+                        </div>
+                    </div>
+                    <div class="verified-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        MOTORISTA VERIFICADO
+                    </div>
+                    <h1 class="driver-name">Douglas Rodrigues</h1>
+                    <p class="driver-title">
+                        <i class="fas fa-car"></i>
+                        Motorista Uber Particular
+                    </p>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Estatísticas -->
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value">5.0</div>
+                        <div class="stat-label">Avaliação</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2.4k</div>
+                        <div class="stat-label">Corridas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3+</div>
+                        <div class="stat-label">Anos</div>
+                    </div>
+                </div>
+
+                <!-- Contato -->
+                <div class="contact-section">
+                    <div class="contact-item" onclick="ligar(this)">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-label">Telefone</div>
+                            <div class="contact-value">(17) 99975-4390</div>
+                        </div>
+                        <div class="contact-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="contact-item" onclick="abrirWhatsApp(this)">
+                        <div class="contact-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-label">WhatsApp</div>
+                            <div class="contact-value">Chamar no WhatsApp</div>
+                        </div>
+                        <div class="contact-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações Rápidas (removido QR Code e Localização) -->
+                <div class="actions-grid">
+                    <button class="action-btn" onclick="salvarContato(this)">
+                        <i class="fas fa-address-card"></i>
+                        <span>Salvar</span>
+                    </button>
+                    <button class="action-btn" onclick="compartilhar(this)">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Compartilhar</span>
+                    </button>
+                    <button class="action-btn" onclick="copiarTelefone(this)">
+                        <i class="fas fa-copy"></i>
+                        <span>Copiar</span>
+                    </button>
+                </div>
+
+                <!-- Botão Principal -->
+                <button class="btn-primary" onclick="abrirModalCorrida(this)">
+                    <i class="fas fa-taxi"></i>
+                    SOLICITAR CORRIDA
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="card-footer">
+                <div class="footer-logo">Ⓤ</div>
+                <div class="footer-text">
+                    Cartão Digital Oficial Uber<br>
+                    Motorista Particular Verificado
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Solicitar Corrida -->
+    <div class="modal-overlay" id="modalCorrida">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">🚗 Solicitar Corrida</h3>
+                <button class="modal-close" onclick="fecharModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Tipo de Viagem -->
+                <div class="trip-type-selector">
+                    <button class="trip-type-btn active" onclick="selecionarTipoViagem('cidade', this)">
+                        <i class="fas fa-city"></i>
+                        Dentro da Cidade
+                    </button>
+                    <button class="trip-type-btn" onclick="selecionarTipoViagem('viagem', this)">
+                        <i class="fas fa-route"></i>
+                        Viagem / Longa
+                    </button>
+                </div>
+
+                <!-- Nome do Cliente -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Seu Nome
+                    </label>
+                    <input type="text" class="form-input" id="nomeCliente" placeholder="Digite seu nome completo">
+                </div>
+
+                <!-- Origem -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-map-marker-alt"></i> Local de Origem
+                    </label>
+                    <input type="text" class="form-input" id="origem" placeholder="Ex: Rua das Flores, 123 - Centro">
+                </div>
+
+                <!-- Ícone de Rota -->
+                <div class="route-icon">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+
+                <!-- Destino -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-flag-checkered"></i> Destino
+                    </label>
+                    <input type="text" class="form-input" id="destino" placeholder="Ex: Shopping Center - Bairro Novo">
+                </div>
+
+                <!-- Preço -->
+                <div class="price-section">
+                    <div class="price-label">Valor Estimado</div>
+                    <div class="price-value" id="valorEstimado">R$ 10,00</div>
+                    <div class="price-note" id="valorNota">Valor fixo para corridas dentro da cidade</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-confirm" id="btnConfirmar" onclick="confirmarCorrida()">
+                    <i class="fab fa-whatsapp"></i>
+                    Enviar pelo WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Ação realizada com sucesso!</span>
+    </div>
+
+    <script>
+        // Dados do motorista
+        const motorista = {
+            nome: 'Douglas Rodrigues',
+            telefone: '17999754390',
+            telefoneFormatado: '(17) 99975-4390',
+            email: '',
+            categoria: 'Motorista Uber Particular'
+        };
+
+        let tipoViagemAtual = 'cidade';
+
+        // Efeito ripple
+        function createRipple(event, element) {
+            const ripple = document.createElement('span');
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            element.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // Mostrar toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Abrir modal de corrida
+        function abrirModalCorrida(element) {
+            createRipple(event, element);
+            document.getElementById('modalCorrida').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalCorrida').classList.remove('show');
+            document.body.style.overflow = '';
+            // Limpar campos
+            document.getElementById('nomeCliente').value = '';
+            document.getElementById('origem').value = '';
+            document.getElementById('destino').value = '';
+        }
+
+        // Selecionar tipo de viagem
+        function selecionarTipoViagem(tipo, btn) {
+            tipoViagemAtual = tipo;
+            
+            // Atualizar botões
+            document.querySelectorAll('.trip-type-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Atualizar valor
+            const valorEl = document.getElementById('valorEstimado');
+            const notaEl = document.getElementById('valorNota');
+            
+            if (tipo === 'cidade') {
+                valorEl.textContent = 'R$ 10,00';
+                valorEl.style.color = 'var(--accent)';
+                notaEl.textContent = 'Valor fixo para corridas dentro da cidade';
+            } else {
+                valorEl.textContent = 'A Combinar';
+                valorEl.style.color = '#fbbf24';
+                notaEl.textContent = 'Valor a definir conforme distância';
+            }
+        }
+
+        // Confirmar corrida
+        function confirmarCorrida() {
+            const nomeCliente = document.getElementById('nomeCliente').value.trim();
+            const origem = document.getElementById('origem').value.trim();
+            const destino = document.getElementById('destino').value.trim();
+            
+            if (!nomeCliente || !origem || !destino) {
+                showToast('Preencha todos os campos!');
+                return;
+            }
+            
+            let mensagem = `Olá ${motorista.nome}! Me chamo *${nomeCliente}* e gostaria de solicitar uma corrida.`;
+            mensagem += `\n\n📍 *Origem:* ${origem}`;
+            mensagem += `\n🏁 *Destino:* ${destino}`;
+            
+            if (tipoViagemAtual === 'cidade') {
+                mensagem += `\n💰 *Valor:* R$ 10,00`;
+            } else {
+                mensagem += `\n💰 *Valor:* A combinar`;
+            }
+            
+            mensagem += `\n\nAguardo confirmação!`;
+            
+            const messageEncoded = encodeURIComponent(mensagem);
+            window.open(`https://wa.me/55${motorista.telefone}?text=${messageEncoded}`, '_blank');
+            
+            fecharModal();
+            showToast('Redirecionando para WhatsApp...');
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modalCorrida').addEventListener('click', function(e) {
+            if (e.target === this) {
+                fecharModal();
+            }
+        });
+
+        // Ligar
+        function ligar(element) {
+            createRipple(event, element);
+            setTimeout(() => {
+                window.location.href = `tel:${motorista.telefone}`;
+            }, 300);
+        }
+
+        // Abrir WhatsApp
+        function abrirWhatsApp(element) {
+            if (element) createRipple(event, element);
+            const message = encodeURIComponent(`Olá ${motorista.nome}! Gostaria de solicitar uma corrida.`);
+            window.open(`https://wa.me/55${motorista.telefone}?text=${message}`, '_blank');
+        }
+
+        // Copiar telefone
+        function copiarTelefone(element) {
+            createRipple(event, element);
+            navigator.clipboard.writeText(motorista.telefoneFormatado).then(() => {
+                showToast('Telefone copiado!');
+            }).catch(() => {
+                showToast('Erro ao copiar');
+            });
+        }
+
+        // Salvar contato (vCard)
+        function salvarContato(element) {
+            createRipple(event, element);
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:${motorista.nome}
+TEL;TYPE=CELL:+55${motorista.telefone}
+TITLE:${motorista.categoria}
+NOTE:Motorista Uber Particular Verificado
+END:VCARD`;
+
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${motorista.nome.replace(/\s+/g, '_')}.vcf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showToast('Contato salvo!');
+        }
+
+        // Compartilhar
+        async function compartilhar(element) {
+            createRipple(event, element);
+            const shareData = {
+                title: `${motorista.nome} - Motorista Uber`,
+                text: `🚗 ${motorista.nome}\n📱 ${motorista.telefoneFormatado}\n\nMotorista Uber Particular Verificado`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Erro ao compartilhar:', err);
+                }
+            } else {
+                const text = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Copiado para área de transferência!');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
